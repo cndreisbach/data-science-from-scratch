@@ -21,6 +21,15 @@
       '()
       (cons (* (first vec) c) (vector-mul (rest vec) c))))
 
+(define (vector-sum vecs)
+ (cond
+   [(empty? vecs) (error "Cannot take the sum of 0 vectors")]
+   [(= (length vecs) 1) (first vecs)]
+   [else (foldl vector-add (first vecs) (rest vecs))]))
+
+(define (vector-mean vecs)
+  (vector-mul (vector-sum vecs) (/ 1 (length vecs))))
+
 (define (dot v w)
   (cond
     [(and (empty? v) (empty? w)) 0]
@@ -36,6 +45,8 @@
 (check-expect '(4 6) (vector-add '(1 2) '(3 4)))
 (check-error (vector-add '(1 2) '(3 4 5)))
 (check-expect '(-2 -2) (vector-sub '(1 2) '(3 4)))
+(check-expect '(2 8) (vector-sum '((1 2) (3 4) (-2 2))))
+(check-expect '(1 3) (vector-mean '((1 2) (3 4) (-1 3))))
 (check-expect '(3 9 15) (vector-mul '(1 3 5) 3))
 (check-expect 17 (dot '(7 5) '(1 2)))
 (check-expect 5 (magnitude '(3 4)))
