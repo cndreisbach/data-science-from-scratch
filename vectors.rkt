@@ -42,16 +42,11 @@
 (define (distance v w)
   (magnitude (vector-sub v w)))
 
-(check-expect '(4 6) (vector-add '(1 2) '(3 4)))
-(check-error (vector-add '(1 2) '(3 4 5)))
-(check-expect '(-2 -2) (vector-sub '(1 2) '(3 4)))
-(check-expect '(2 8) (vector-sum '((1 2) (3 4) (-2 2))))
-(check-expect '(1 3) (vector-mean '((1 2) (3 4) (-1 3))))
-(check-expect '(3 9 15) (vector-mul '(1 3 5) 3))
-(check-expect 17 (dot '(7 5) '(1 2)))
-(check-expect 5 (magnitude '(3 4)))
-(check-expect 0 (distance '(3 4) '(3 4)))
-(check-expect 1 (distance '(1 1) '(2 1)))
-(check-expect 5 (distance '(1 1) '(4 5)))
-(check-expect 5 (distance '(4 5) '(1 1)))
-(test)
+(provide vector-add
+         vector-sub
+         vector-mul
+         vector-sum
+         vector-mean
+         dot
+         magnitude
+         distance)

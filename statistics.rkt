@@ -1,6 +1,7 @@
 #lang racket
 
 (require test-engine/racket-tests)
+(require "vectors.rkt")
 
 ;; These functions are available in math/statistics. Implementing for practice.
 
@@ -61,18 +62,26 @@
   (- (percentile xs 0.75)
      (percentile xs 0.25)))
 
+(define (covariance xs ys)
+  (/ (dot (de-mean xs) (de-mean ys)) (sub1 (length xs))))
 
-(define testnums '(43 54 56 61 62 66 68 69 69 70 71 72 77 78 79 85 87 88 89 93 95 96 98 99 99))
-(check-expect (sum '(1 2 3 4)) 10)
-(check-expect (mean '(1 2 3 4)) 5/2)
-(check-expect (median '(9 4 -1)) 4)
-(check-expect (median '(9 4 -1 7)) 11/2)
-(check-expect (percentile testnums 0.9) 98)
-(check-expect (percentile testnums 0.2) 64)
-(check-expect (percentile testnums 0.5) (median testnums))
-(check-expect (sort (mode testnums) <) '(69 99))
-(check-expect (data-range testnums) 56)
-(check-expect (de-mean '(1 3 5 7)) '(-3 -1 1 3))
-(check-expect (sum-of-squares '(1 3 5 7)) 84)
-(check-expect (variance '(1 3 5 7)) 20/3)
-(test)
+(define (correlation xs ys)
+  (define std-dev-x (std-dev xs))
+  (define std-dev-y (std-dev ys))
+  (if (and (positive? std-dev-x) (positive? std-dev-y))
+      (/ (covariance xs ys) std-dev-x std-dev-y)
+      0))
+
+(provide sum
+         mean
+         median
+         percentile
+         mode
+         data-range
+         de-mean
+         variance
+         std-dev
+         interquartile-range
+         sum-of-squares
+         correlation)
+
