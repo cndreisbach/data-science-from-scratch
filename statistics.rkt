@@ -72,6 +72,11 @@
       (/ (covariance xs ys) std-dev-x std-dev-y)
       0))
 
+(define (remove-outliers xs)
+  (define top (+ (percentile xs 0.75) (interquartile-range xs)))
+  (define bottom (- (percentile xs 0.25) (interquartile-range xs)))
+  (filter (lambda (x) (and (>= x bottom) (<= x top))) xs))
+
 (provide sum
          mean
          median
@@ -83,5 +88,6 @@
          std-dev
          interquartile-range
          sum-of-squares
-         correlation)
+         correlation
+         remove-outliers)
 

@@ -18,3 +18,5 @@
 (check-equal? (sum-of-squares '(1 3 5 7)) 84)
 (check-equal? (variance '(1 3 5 7)) 20/3)
 (check-= (correlation testnums testnums) 1 0.0)
+(check-equal? (remove-outliers '(0 0 10 12 15 16 16 17 22 45))
+              '(10 12 15 16 16 17 22))
